@@ -2,7 +2,7 @@
   "name": "server_userauthentication",
   "version": "1.0.0",
   "description": "",
-  "main": "authServer.js",
+  "main": "api/authServer.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
