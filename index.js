@@ -20,10 +20,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cors({
-    origin: '*',
-    method: "GET, POST, PUT, DELETE",
+    origin: 'https://rowelcaps.github.io',
+    methods: "GET, POST, PUT, DELETE",
     credentials: true
-}))
+}));
 
 const db = new pg.Client({
     user:"avnadmin",
