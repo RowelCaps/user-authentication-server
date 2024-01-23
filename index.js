@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(cors({
-    origin: 'https://rowelcaps.github.io',
+    origin: '*',
     methods: "GET, POST, PUT, DELETE",
     credentials: true
 }));
