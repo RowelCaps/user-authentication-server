@@ -19,6 +19,8 @@ app.use(cors({
     credentials: true
 }));
 
+app.options("/user", cors());
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -211,6 +213,7 @@ app.post("/register", async function(req, res) {
 
 
 app.get("/user", async function(req, res) {
+
     const accessToken = req.cookies.accessToken;
 
     if(!accessToken) return res.status(403).json({success:false, message: "Invalid Access Token"});
