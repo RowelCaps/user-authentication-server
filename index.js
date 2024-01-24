@@ -89,7 +89,7 @@ app.post('/token', async function(req,res) {
     }
 });
 
-app.get('/verify-authentication', async function(req, res) {
+app.get('/verify-authentication',cors(), async function(req, res) {
 
     const accessToken = req.cookies.accessToken;
 
