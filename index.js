@@ -163,7 +163,7 @@ app.post("/register", async function(req, res) {
 
     const userExistResult = await db.query('SELECT * from user_data WHERE email=$1', [userData.email]);
 
-    if(userExistResult.rowCount > 0) {
+    if(userExistResult.rows.length > 0) {
         return res.status(403).json({success: false, message: "Email has been taken!"});
     }
 
