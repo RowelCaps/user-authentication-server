@@ -14,12 +14,13 @@ dotenv.config({path:'./.env'});
 const app = express();
 
 app.use(cors({
-    origin: 'https://rowelcaps.github.io',
+    origin: '*',
     methods: "GET, POST, PUT, DELETE",
     credentials: true
 }));
 
 app.options("/user", cors());
+app.options('/verify-authentication', cors());
 
 app.use(cookieParser());
 app.use(bodyParser.json());
