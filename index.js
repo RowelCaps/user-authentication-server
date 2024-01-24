@@ -13,16 +13,16 @@ dotenv.config({path:'./.env'});
 
 const app = express();
 
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
 app.use(cors({
     origin: 'https://rowelcaps.github.io',
     methods: "GET, POST, PUT, DELETE",
     credentials: true
+}));
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
 }));
 
 const db = new pg.Client({
@@ -187,7 +187,7 @@ app.post("/register", async function(req, res) {
 
                 bcrypt.hash(refreshToken, SALT_HASH, async function(err, hash) {
 
-                    const result = await db.query("INSERT INTO user_refresh_tokens (refresh_token, date_created, expiry_date) VALUES ($1,$2,$3)"
+                    const result = await db.query("INSERT INTO user_refresh_token (refresh_token, date_created, expiry_date) VALUES ($1,$2,$3)"
                     , [hash, formattedCurrentDate, formattedExpiryDate]);
                 
                     if(result.rowCount > 0){
@@ -198,12 +198,12 @@ app.post("/register", async function(req, res) {
                 });
 
             } catch(err) {
-                return res.status(500).json({success: true, message: "Failed to register!"});
+                return res.status(500).json({success: false, message: "Failed to register!"});
             }
 
         } catch(err) {
             console.log(err);
-            return res.status(500).json({success: true, message: "Failed to register!"});
+            return res.status(500).json({success: false, message: "Failed to register!"});
         }
     });
 });
