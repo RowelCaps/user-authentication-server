@@ -173,11 +173,7 @@ app.post("/register", async function(req, res) {
             const result = await db.query("INSERT INTO user_data (name,email, password) VALUES ($1,$2,$3)",
              [userData.name, userData.email, hash]);
 
-             if(result.rowCount <= 0){
-                return res.status(500).json({success: true, message: "Failed to register!"});
-             }
-
-             const accessToken = generateAccessToken(userData.email);
+            const accessToken = generateAccessToken(userData.email);
             const refreshToken = jwt.sign(userData.email, process.env.REFRESH_TOKEN_SECRET_KEY);
 
             try{
