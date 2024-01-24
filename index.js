@@ -198,12 +198,12 @@ app.post("/register", async function(req, res) {
                 });
 
             } catch(err) {
-                return res.status(500).json({success: false, message: "Failed to register!"});
+                return res.status(500).json({success: false, message: `Failed to upload refresh token ${err}`});
             }
 
         } catch(err) {
             console.log(err);
-            return res.status(500).json({success: false, message: "Failed to register!"});
+            return res.status(500).json({success: false, message: `Failed to register! {err}`});
         }
     });
 });
