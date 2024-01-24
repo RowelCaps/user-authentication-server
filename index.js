@@ -203,7 +203,7 @@ app.post("/register", async function(req, res) {
 
         } catch(err) {
             console.log(err);
-            return res.status(500).json({success: false, message: `Failed to register! {err}`});
+            return res.status(500).json({success: false, message: `Failed to register! ${err}`});
         }
     });
 });
