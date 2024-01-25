@@ -14,13 +14,10 @@ dotenv.config({path:'./.env'});
 const app = express();
 
 app.use(cors({
-    origin: 'https://rowelcaps.github.io',
+    origin: process.env.ORIGIN_URL,
     methods: "GET, POST, PUT, DELETE",
     credentials: true
 }));
-    
-app.options("/user", cors());
-app.options('/verify-authentication', cors());
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -89,9 +86,10 @@ app.post('/token', async function(req,res) {
     }
 });
 
-app.get('/verify-authentication',cors(), async function(req, res) {
+app.get('/verify-authentication', async function(req, res) {
 
     const accessToken = req.cookies.accessToken;
+
 
     try{
         const decodedToken = await jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY);
@@ -110,6 +108,8 @@ app.get('/verify-authentication',cors(), async function(req, res) {
 
 app.post("/login", async function(req, res) {
 
+    console.log("fuck yeah");
+    
     const user = { 
         email: req.body.email,
         password: req.body.password
@@ -138,7 +138,7 @@ app.post("/login", async function(req, res) {
 
         bcrypt.hash(refreshToken, SALT_HASH, async function(err, hash) {
 
-            const result = await db.query("INSERT INTO user_refresh_tokens (refresh_token, date_created, expiry_date) VALUES ($1,$2,$3)"
+            const result = await db.query("INSERT INTO user_refresh_token (refresh_token, date_created, expiry_date) VALUES ($1,$2,$3)"
             , [hash, formattedCurrentDate, formattedExpiryDate]);
             
             if(result.rowCount > 0){
@@ -194,6 +194,10 @@ app.post("/register", async function(req, res) {
                     , [hash, formattedCurrentDate, formattedExpiryDate]);
                 
                     if(result.rowCount > 0){
+
+                        res.cookie('accessToken', accessToken, {httpOnly: true, secure: true});
+                        res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true});
+
                         return res.status(200).json({success: true, accessToken: accessToken, refreshToken: refreshToken});
                     } else {
                         return res.sendStatus(403);
@@ -238,7 +242,7 @@ app.post('/logout', async function(req,res){
 
     const hashedToken = await bcrypt.hash(refreshToken, SALT_HASH);
     console.log("fuck you");
-    const result = await db.query('DELETE FROM user_refresh_tokens WHERE refresh_token=$1', [hashedToken]);
+    const result = await db.query('DELETE FROM user_refresh_token WHERE refresh_token=$1', [hashedToken]);
     console.log("fuck you");
 
     res.clearCookie('accessToken');
@@ -255,10 +259,15 @@ async function refreshAccessTokens(req, res){
     const refreshToken = req.cookies.refreshToken;
 
     try{
+        console.log("fuck");
         const refreshTokenHashed = await bcrypt.hash(refreshToken, SALT_HASH);
-        const result = await db.query("SELECT * from user_refresh_tokens WHERE refresh_token=$1", [refreshTokenHashed]);
+        
+        console.log("fuck2");
+        const result = await db.query("SELECT * from user_refresh_token WHERE refresh_token=$1", [refreshTokenHashed]);
+        console.log("fuck3");
 
         if(result.rows.length <= 0) return {status: 503, success: false,message: "Refresh Token Invalid"};
+        console.log("fuck4");
 
         const tokenInfo = result.rows[0];
 
@@ -280,7 +289,7 @@ async function refreshAccessTokens(req, res){
         });
 
     } catch(error) {
-        return {success: false, message: "Internal Server Error"};
+        return {status: 500, success: false, message: "Internal Server Error"};
     }
 }
 
