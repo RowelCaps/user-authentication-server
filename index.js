@@ -141,8 +141,8 @@ app.post("/login", async function(req, res) {
             , [hash, formattedCurrentDate, formattedExpiryDate]);
             
             if(result.rowCount > 0){
-                res.cookie('accessToken', accessToken, {httpOnly: true, secure: true});
-                res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true});
+                res.cookie('accessToken', accessToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
+                res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
         
                 return res.status(200).json({success:true, accessToken: accessToken, refreshToken: refreshToken});
             } else {
