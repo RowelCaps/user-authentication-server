@@ -90,7 +90,6 @@ app.get('/verify-authentication', async function(req, res) {
 
     const accessToken = req.cookies.accessToken;
 
-
     try{
         const decodedToken = await jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY);
         
@@ -109,7 +108,7 @@ app.get('/verify-authentication', async function(req, res) {
 app.post("/login", async function(req, res) {
 
     console.log("fuck yeah");
-    
+
     const user = { 
         email: req.body.email,
         password: req.body.password
@@ -260,6 +259,7 @@ async function refreshAccessTokens(req, res){
 
     try{
         console.log("fuck");
+        console.log("fuck i dunno");
         const refreshTokenHashed = await bcrypt.hash(refreshToken, SALT_HASH);
         
         console.log("fuck2");
