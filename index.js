@@ -258,8 +258,14 @@ async function refreshAccessTokens(req, res){
     const refreshToken = req.cookies.refreshToken;
 
     try{
-        console.log("fuck");
-        console.log("fuck i dunno");
+
+        if(!refreshToken){
+            console.log("fuck i dunno");
+        } else {
+
+            console.log(req.cookies.refreshToken);
+
+        }
         const refreshTokenHashed = await bcrypt.hash(refreshToken, SALT_HASH);
         
         console.log("fuck2");
