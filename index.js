@@ -140,8 +140,8 @@ app.post(`${process.env.SERVER_URL}/login`, async function(req, res) {
 
             console.log(accessToken);
 
-            res.cookie('accessToken', accessToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
-            res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
+            res.cookie('accessToken', accessToken, {httpOnly: true, secure: true});
+            res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true});
     
             return res.status(200).json({success:true, accessToken: accessToken, refreshToken: refreshToken});
         });
