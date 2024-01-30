@@ -87,7 +87,7 @@ app.post(`${process.env.SERVER_URL}/token`, async function(req,res) {
     }
 });
 
-app.get(`${process.env.SERVER_URL}/verify-authentication`, async function(req, res) {
+app.post(`${process.env.SERVER_URL}/verify-authentication`, async function(req, res) {
 
     const accessToken = req.cookies.accessToken;
 
@@ -252,7 +252,7 @@ function generateAccessToken(userData){
 }
 
 async function refreshAccessTokens(req, res){
-    
+
     const refreshToken = req.cookies.refreshToken;
 
     console.log(`${refreshToken} refrrsh token`)
