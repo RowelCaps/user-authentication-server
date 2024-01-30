@@ -221,6 +221,7 @@ app.get(`${process.env.SERVER_URL}/user`, async function(req, res) {
         console.log(`${user.email} email`);
 
         if(err){
+            console.log(err);
         return res.status(403).json({success:false, message: err});
         }
 
@@ -230,6 +231,7 @@ app.get(`${process.env.SERVER_URL}/user`, async function(req, res) {
 
         const userData = result.rows[0];
         console.log(`${userData} userData`);
+
         return res.status(200).json({success: true, userData: userData});
     });
 });
