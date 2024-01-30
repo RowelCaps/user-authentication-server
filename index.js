@@ -252,9 +252,7 @@ function generateAccessToken(userData){
 }
 
 async function refreshAccessTokens(req, res){
-
-    console.log(`${req.cookies} Cookies`);
-
+    
     const refreshToken = req.cookies.refreshToken;
 
     console.log(`${refreshToken} refrrsh token`)
