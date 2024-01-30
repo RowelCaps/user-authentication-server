@@ -141,8 +141,8 @@ app.post(`${process.env.SERVER_URL}/login`, async function(req, res) {
 
             console.log(accessToken);
 
-            res.cookie('accessToken', accessToken, {httpOnly: true, secure: true});
-            res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true});
+            res.cookie('accessToken', accessToken, {httpOnly: true, secure: true, path: '/', domain: '143.198.200.60/'});
+            res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true, path: '/', domain: '143.198.200.60'});
     
             return res.status(200).json({success:true, accessToken: accessToken, refreshToken: refreshToken});
         });
