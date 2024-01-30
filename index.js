@@ -194,7 +194,7 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
                     res.cookie('accessToken', accessToken);
                     res.cookie('refreshToken', refreshToken);
 
-                    return res.status(200).json({success: true, accessToken: accessToken, refreshToken: refreshToken});
+                    return res.status(200).json({success: true, message: "Register Success!"});
                 });
 
             } catch(err) {
@@ -218,7 +218,7 @@ app.get(`${process.env.SERVER_URL}/user`, async function(req, res) {
 
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY, async (err,user) => {
 
-        console.log(user.email);
+        console.log(`${user.email} email`);
 
         if(err){
         return res.status(403).json({success:false, message: err});
