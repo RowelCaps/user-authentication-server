@@ -20,6 +20,7 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -256,6 +257,8 @@ async function refreshAccessTokens(req, res){
 
     const refreshToken = req.cookies.refreshToken;
 
+    console.log(`${refreshToken} refrrsh token`)
+
     try{
 
         if(!refreshToken){
@@ -287,7 +290,7 @@ async function refreshAccessTokens(req, res){
             return {status: 403, success: false, message: 'Token could not be found!'};
         }
 
-        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY, (err, user) => {
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY, async (err, user) => {
 
             const accessToken = generateAccessToken({email: user.email})
             return {success: true, accessToken: accessToken};
