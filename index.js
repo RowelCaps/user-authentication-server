@@ -160,8 +160,6 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
         password: req.body.password
     }
 
-    console.log(`${userData.email} email`);
-
     const userExistResult = await db.query('SELECT * from user_data WHERE email=$1', [userData.email]);
 
     if(userExistResult.rows.length > 0) {
@@ -257,6 +255,8 @@ app.post(`${process.env.SERVER_URL}/logout`, async function(req,res){
 });
 
 function generateAccessToken(userData){
+
+    console.log(`${userData.email} email`);
     return jwt.sign({email: userData.email}, process.env.ACCESS_TOKEN_SECRET_KEY, {expiresIn: '10m'});
 }
 
