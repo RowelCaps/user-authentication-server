@@ -185,19 +185,16 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
                 const formattedExpiryDate = expiryDate.toISOString().split('T')[0];
 
                 bcrypt.hash(refreshToken, SALT_HASH, async function(err, hash) {
+                    
+                    if(err) return res.sendStatus(403);
 
                     const result = await db.query("INSERT INTO user_refresh_token (refresh_token, date_created, expiry_date) VALUES ($1,$2,$3)"
                     , [hash, formattedCurrentDate, formattedExpiryDate]);
-                
-                    if(result.rowCount > 0){
 
-                        res.cookie('accessToken', accessToken);
-                        res.cookie('refreshToken', refreshToken);
+                    res.cookie('accessToken', accessToken);
+                    res.cookie('refreshToken', refreshToken);
 
-                        return res.status(200).json({success: true, accessToken: accessToken, refreshToken: refreshToken});
-                    } else {
-                        return res.sendStatus(403);
-                    }
+                    return res.status(200).json({success: true, accessToken: accessToken, refreshToken: refreshToken});
                 });
 
             } catch(err) {
