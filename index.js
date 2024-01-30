@@ -107,8 +107,6 @@ app.get(`${process.env.SERVER_URL}/verify-authentication`, async function(req, r
 
 app.post(`${process.env.SERVER_URL}/login`, async function(req, res) {
 
-    console.log("fuck yeah");
-
     const user = { 
         email: req.body.email,
         password: req.body.password
@@ -139,6 +137,8 @@ app.post(`${process.env.SERVER_URL}/login`, async function(req, res) {
 
             const result = await db.query("INSERT INTO user_refresh_token (refresh_token, date_created, expiry_date) VALUES ($1,$2,$3)"
             , [hash, formattedCurrentDate, formattedExpiryDate]);
+
+            console.log(accessToken);
             
             if(result.rowCount > 0){
                 res.cookie('accessToken', accessToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
