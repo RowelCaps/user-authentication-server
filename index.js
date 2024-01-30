@@ -220,9 +220,12 @@ app.get(`${process.env.SERVER_URL}/user`, async function(req, res) {
     if(!accessToken) return res.status(403).json({success:false, message: "Invalid Access Token"});
 
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY, async (err,user) => {
-        const result = await db.query("SELECT name,email from user_data WHERE email=$1", [user.email]);
 
-        if(result.rowCount <= 0) return res.status(403).json({success:false, message: "Invalid Access Token"});
+        if(err){
+        return res.status(403).json({success:false, message: err});
+        }
+
+        const result = await db.query("SELECT name,email from user_data WHERE email=$1", [user.email]);
 
         const userData = result.rows[0];
         return res.status(200).json({success: true, userData: userData});
