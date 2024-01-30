@@ -191,8 +191,8 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
                 
                     if(result.rowCount > 0){
 
-                        res.cookie('accessToken', accessToken, {httpOnly: true, secure: true});
-                        res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true});
+                        res.cookie('accessToken', accessToken);
+                        res.cookie('refreshToken', refreshToken);
 
                         return res.status(200).json({success: true, accessToken: accessToken, refreshToken: refreshToken});
                     } else {
