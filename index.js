@@ -218,6 +218,8 @@ app.get(`${process.env.SERVER_URL}/user`, async function(req, res) {
 
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY, async (err,user) => {
 
+        console.log(user.email);
+
         if(err){
         return res.status(403).json({success:false, message: err});
         }
