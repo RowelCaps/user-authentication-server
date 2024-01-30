@@ -160,6 +160,8 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
         password: req.body.password
     }
 
+    console.log(`${userData.email} email`);
+
     const userExistResult = await db.query('SELECT * from user_data WHERE email=$1', [userData.email]);
 
     if(userExistResult.rows.length > 0) {
