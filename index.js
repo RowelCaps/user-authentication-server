@@ -139,15 +139,11 @@ app.post(`${process.env.SERVER_URL}/login`, async function(req, res) {
             , [hash, formattedCurrentDate, formattedExpiryDate]);
 
             console.log(accessToken);
-            
-            if(result.rowCount > 0){
-                res.cookie('accessToken', accessToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
-                res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
-        
-                return res.status(200).json({success:true, accessToken: accessToken, refreshToken: refreshToken});
-            } else {
-                return res.sendStatus(403);
-            }
+
+            res.cookie('accessToken', accessToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
+            res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true, domain: '.aquamarine-arithmetic-ee9cb4.netlify.app'});
+    
+            return res.status(200).json({success:true, accessToken: accessToken, refreshToken: refreshToken});
         });
 
     } catch(err) {
