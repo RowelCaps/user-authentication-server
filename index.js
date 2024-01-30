@@ -175,7 +175,7 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
 
              console.log(`${userData.email} email`); 
 
-            const accessToken = generateAccessToken(userData.email);
+            const accessToken = generateAccessToken(userData);
             const refreshToken = jwt.sign(userData.email, process.env.REFRESH_TOKEN_SECRET_KEY);
 
             try{
