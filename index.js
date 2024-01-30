@@ -224,7 +224,10 @@ app.get(`${process.env.SERVER_URL}/user`, async function(req, res) {
 
         const result = await db.query("SELECT name,email from user_data WHERE email=$1", [user.email]);
 
+        if(result.rows.length <= 0) return res.status(403).json({success:false, message: err});
+
         const userData = result.rows[0];
+        console.log(`${userData} userData`);
         return res.status(200).json({success: true, userData: userData});
     });
 });
