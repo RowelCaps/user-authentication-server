@@ -160,6 +160,7 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
         password: req.body.password
     }
 
+
     const userExistResult = await db.query('SELECT * from user_data WHERE email=$1', [userData.email]);
 
     if(userExistResult.rows.length > 0) {
@@ -171,6 +172,8 @@ app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
         try{
             const result = await db.query("INSERT INTO user_data (name,email, password) VALUES ($1,$2,$3)",
              [userData.name, userData.email, hash]);
+
+             console.log(`${userData.email} email`); 
 
             const accessToken = generateAccessToken(userData.email);
             const refreshToken = jwt.sign(userData.email, process.env.REFRESH_TOKEN_SECRET_KEY);
@@ -255,8 +258,8 @@ app.post(`${process.env.SERVER_URL}/logout`, async function(req,res){
 });
 
 function generateAccessToken(userData){
-
-    console.log(`${userData.email} email`);
+    
+    console.log(`${userData.email} email generation acess toen`);
     return jwt.sign({email: userData.email}, process.env.ACCESS_TOKEN_SECRET_KEY, {expiresIn: '10m'});
 }
 
