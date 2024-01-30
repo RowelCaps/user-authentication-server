@@ -101,7 +101,7 @@ app.post(`${process.env.SERVER_URL}/verify-authentication`, async function(req, 
 
         if(!refreshResult.success) return res.status(refreshResult.status).json({success: false, message: refreshResult.message});
 
-        res.cookie('accessToken', refreshResult.accessToken, {httpOnly: true, secure: true});
+        res.cookie('accessToken', refreshResult.accessToken);
         return res.status(200).json({success:true, message: "Verified Client!"});
     }
 });
