@@ -251,6 +251,9 @@ function generateAccessToken(userData){
 }
 
 async function refreshAccessTokens(req, res){
+
+    console.log(req.cookies);
+    
     const refreshToken = req.cookies.refreshToken;
 
     try{
