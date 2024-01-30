@@ -43,11 +43,11 @@ db.connect()
     console.log(err);
 });
 
-app.get("/", function(req, res) {
+app.get(process.env.SERVER_URL, function(req, res) {
     return res.json({message: "Hello"});
 })
 
-app.post('/token', async function(req,res) {
+app.post(`${process.env.SERVER_URL}/token`, async function(req,res) {
 
     const refreshToken = req.cookies.refreshToken;
 
@@ -86,7 +86,7 @@ app.post('/token', async function(req,res) {
     }
 });
 
-app.get('/verify-authentication', async function(req, res) {
+app.get(`${process.env.SERVER_URL}/verify-authentication`, async function(req, res) {
 
     const accessToken = req.cookies.accessToken;
 
@@ -105,7 +105,7 @@ app.get('/verify-authentication', async function(req, res) {
     }
 });
 
-app.post("/login", async function(req, res) {
+app.post(`${process.env.SERVER_URL}/login`, async function(req, res) {
 
     console.log("fuck yeah");
 
@@ -155,7 +155,7 @@ app.post("/login", async function(req, res) {
     }
 });
 
-app.post("/register", async function(req, res) {
+app.post(`${process.env.SERVER_URL}/register`, async function(req, res) {
 
     const userData = {
         name: req.body.name,
@@ -216,7 +216,7 @@ app.post("/register", async function(req, res) {
 
 
 
-app.get("/user", async function(req, res) {
+app.get(`${process.env.SERVER_URL}/user`, async function(req, res) {
 
     const accessToken = req.cookies.accessToken;
 
@@ -232,11 +232,11 @@ app.get("/user", async function(req, res) {
     });
 });
 
-app.get("/testServer", async function(req,res) {
+app.get(`${process.env.SERVER_URL}/testServer`, async function(req,res) {
     return res.json({message: "server is live"});
   });
 
-app.post('/logout', async function(req,res){
+app.post(`${process.env.SERVER_URL}/logout`, async function(req,res){
     const refreshToken = req.cookies.refreshToken;
 
     const hashedToken = await bcrypt.hash(refreshToken, SALT_HASH);
